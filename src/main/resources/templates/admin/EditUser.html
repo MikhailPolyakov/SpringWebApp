@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/">Главная страница</a>
+<br/>
+<form th:method="PATCH" th:action="@{/admin/allUsers/{id}/edit(id=${Obj.getId()})}" th:object="${Obj}">
+    <label for="fullname">Ф.И.О</label>
+    <input type="text" th:field="*{fullname}" id="fullname" />
+
+
+
+</form>
+
+
+</body>
+</html>

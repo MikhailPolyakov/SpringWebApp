@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${Obj.getRoleList().isEmpty()}"> У пользователя нет никаких ролей</div>
+<form th:method="PATCH" th:action="@{/admin/{id}/role/edit(id=${Obj.getId()})}" th:object="${Obj}" >
+<div th:each="role : ${Roles}">
+        <tr  >
+            <td > <input  th:checked="${Obj.getRoleList().contains(role)}" type="checkbox" name="answerRoles"  th:value="${role.getId()}" />
+        </td>
+        <td th:text="${role.getName()}"></td>
+        </tr>
+</div>
+
+    <input type="submit"  value="Изменить роли"/>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${Obj.getFullname()}"></title>
+</head>
+<body>
+<a href="/">Главная страница</a>
+<br/>
+<p th:text="'Id пользователя : ' + ${Obj.getId()}"></p>
+<p th:text="'Ф.И.О. Пользователя : ' + ${Obj.getFullname()}"></p>
+<p th:text="'Почта : ' + ${Obj.getEmail()}"></p>
+<p  th:text="'Имя пользователя : ' + ${Obj.getUsername()}"></p>
+<a th:href="@{/admin/allUsers/{id}/edit(id=${Obj.getId()})}" >Редактировать пользователя</a>
+<h1>Роли и привилегии пользователя</h1>
+<div th:each="role : ${Obj.getRoleList()}">
+<p  th:text="'Роль : ' + ${role.getName()}"></p>
+    <div th:if="${!role.getPrivileges().isEmpty()}">
+    <span> Привелегии:</span>
+    </div>
+    <span th:each="privilege : ${role.getPrivileges()}">
+<span  th:text="' '+ ${privilege.getPrivilege_name()} +' , '"></span>
+    </span>
+</div>
+<br/>
+<a th:href="@{/admin/{id}/role/edit(id=${Obj.getId()})}" > Редактировать роли</a>
+
+<br/>
+
+<form th:method="DELETE"  th:action="@{/admin/delete/{id}(id=${Obj.getId()})}" >
+    <input class="sub" type="submit" value="Удалить пользователя" />
+</form>
+
+</body>
+</html>

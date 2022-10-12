@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+
+    <link href="/css/main2.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')" >
+<a href="/admin/allUsers">  Панель админа </a>
+</div>
+Mainpage
+<div sec:authorize="hasRole('USER')">Юзер контент</div>
+
+
+<br/>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout"></input>
+</form>
+
+<script>
+    function previewImage() {
+        var file = document.getElementById("file").files
+        if (file.length > 0) {
+            var fileReader = new FileReader()
+
+            fileReader.onload = function (event) {
+                document.getElementById("preview").setAttribute("src", event.target.result)
+            }
+
+            fileReader.readAsDataURL(file[0])
+        }
+    }
+</script>
+
+    <form method="POST"  enctype="multipart/form-data" action="/" th:action="@{/}">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file"  id="file" accept="image/jpeg,image/png" onchange="previewImage();"/></td></tr>
+
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+<img style="max-width: 560px" id="preview">
+
+
+<div th:each="ttpe : ${type}">
+    <span th:text="${ttpe.getName()}"></span>
+    <div th:each="product: ${ttpe.getProduct()}">
+        <p th:text="${product.getName()} +' , ' +  ${product.getPrice()} + ' , ' + ${product.getOldprice()}"> </p>
+        <p> <img th:src="@{${'/images/' + product.getImage()}}" width="120"/></p>
+        </div>
+        </div>
+
+
+
+</body>
+</html>

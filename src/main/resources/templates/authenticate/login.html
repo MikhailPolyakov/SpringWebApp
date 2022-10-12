@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div th:if="${activate}">
+    <span th:text="${activate}"></span>
+</div>
+<div th:if="${message}">
+    <span th:text="${message}"></span>
+</div>
+<br/>
+<form th:object="${logUser}" th:method="POST"  th:action="@{/auth/login}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"  />
+    <label for="username">Введите имя пользователя</label>
+    <input type="text" name="username" id="username"/>
+    <br/>
+
+    <label for="password" >Введите пароль</label>
+    <input type="password" name="password" id="password" />
+    <br/>
+
+    <input type="submit" value="Login"/>
+    <div  style="color:red" th:if="${error}" >
+        <span> Неправильный логин или пароль.</span>
+        <p>Возможно  аккаунт не активирован</p>
+    </div>
+</form>
+<br/>
+<div>
+<a th:href="@{/registration}" th:text="'Зарегистрироваться'"></a>
+</div>
+<a th:href="@{/registration/getcodeagain}"> Получить код активации повторно</a>
+</body>
+</html>
